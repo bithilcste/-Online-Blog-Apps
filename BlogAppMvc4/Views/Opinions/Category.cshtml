@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BlogAppMvc4.Models.Opinion.OpinModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<center><p id="blog" >@Html.ActionLink("MyBlog","OpinView","Opinions")</p></center>
+@if (Request.IsAuthenticated) 
+    { 
+    <p style="font-size:1.25em"><u>@Html.ActionLink("Share", "Create")</u></p>
+    }
+@*<aside>
+    <h3>Category List</h3>
+    <p>
+        Select this for additional information.
+    </p>
+    <ul>
+       <li>@Html.ActionLink("History", "Category", "Opinions", new { opn = "History" }, null)</li>
+       <li>@Html.ActionLink("Movie", "Category", "Opinions", new { opn = "Movie" }, null)</li>
+       <li>@Html.ActionLink("Poem", "Category", "Opinions", new { opn = "Poem" }, null)</li>
+       <li>@Html.ActionLink("Artical", "Category", "Opinions", new { opn = "Article" }, null)</li>
+    </ul>
+</aside>*@
+
+@foreach (var item in Model.OrderByDescending(s => s.opin.OpnID))
+{   
+     <table>
+       <tr>
+         <td><img src="~/Images/Img/user.png" /></td>
+         <td>
+             <table>
+              <tr>
+                <td style="font-size:16px">@item.regis.FirstName @item.regis.LastName</td>
+              </tr>
+              <tr>
+              <td>Posted at @item.opin.infodate </td>
+              </tr>
+            </table>
+         </td>
+       </tr>
+     </table>
+   //
+      <table>
+      <tr>
+          <td>@item.opin.Category >></td>
+          <td style="font-size:1.35em">@item.opin.Title</td><td>&nbsp;</td><td>&nbsp;</td>
+      </tr>
+       <tr><td>&nbsp;</td> <td> @MvcHtmlString.Create(Html.Encode(item.opin.Contents).Replace(Environment.NewLine, "<br />"))</td>
+          <td>&nbsp;</td><td>&nbsp;</td>
+       </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        <td>
+        @if (Request.IsAuthenticated)
+        {
+          <table><tr><td>
+         <u> @Html.ActionLink("Comment ", "ReplyView", "Comments", new { id = item.opin.OpnID }, null)</u></td><td>&nbsp;</td><td>
+         <u>@* @Html.ActionLink(" Reply", "Reply", "Comments", new { id = item.opin.OpnID }, null)*@</u></td></tr></table>
+        }
+        </td>
+       </tr></table>
+}

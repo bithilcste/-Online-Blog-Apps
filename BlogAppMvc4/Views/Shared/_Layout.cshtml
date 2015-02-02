@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("BlogAppMVC4","OpinView","Opinions")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        @*<ul id="menu">
+                            <li>@Html.ActionLink("Home", "", "")</li>
+                            <li>@Html.ActionLink("About", "", "")</li>
+                            <li>@Html.ActionLink("Contact", "", "")</li>
+                        </ul>*@
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                
+    <div id="sidebar">     
+         @Html.Partial("_SearchIndex") 
+
+                     
+    <h3>Category List</h3>
+    <p>
+        Select this for additional information.
+    </p>
+    <ul>
+       <li>@Html.ActionLink("History", "Category", "Opinions", new { opn = "History" }, null)</li>
+       <li>@Html.ActionLink("Movie", "Category", "Opinions", new { opn = "Movie" }, null)</li>
+       <li>@Html.ActionLink("Poem", "Category", "Opinions", new { opn = "Poem" }, null)</li>
+       <li>@Html.ActionLink("Artical", "Category", "Opinions", new { opn = "Article" }, null)</li>
+    </ul>
+             </div>
+  @* <aside>
+      
+       <div>
+       @Html.Partial("_SearchIndex") 
+      </div>
+
+    <h3>Category List</h3>
+    <p>
+        Select this for additional information.
+    </p>
+    <ul>
+       <li>@Html.ActionLink("History", "Category", "Opinions", new { opn = "History" }, null)</li>
+       <li>@Html.ActionLink("Movie", "Category", "Opinions", new { opn = "Movie" }, null)</li>
+       <li>@Html.ActionLink("Poem", "Category", "Opinions", new { opn = "Poem" }, null)</li>
+       <li>@Html.ActionLink("Artical", "Category", "Opinions", new { opn = "Article" }, null)</li>
+    </ul>
+  
+
+</aside>*@
+               @if(!Request.IsAuthenticated)
+                {
+                    <blink  style="font-size:1.20em" ><center style="color:red">If you want to share your ideas | Please log in!</center></blink>
+                }
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

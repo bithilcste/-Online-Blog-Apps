@@ -1,0 +1,63 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<BlogAppMvc4.Models.Opinion.Opinion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+
+<center><p id="blog" >@Html.ActionLink("MyBlog","Index","Opinions")</p></center>
+@if (Request.IsAuthenticated) 
+    { 
+    <p style="font-size:1.25em"><u>@Html.ActionLink("Share", "Create")</u></p>
+    }
+
+@*@{ int numberOfrecords = 3;}
+@foreach (var item in Model.OrderByDescending(s => s.OpnID).Take(numberOfrecords))
+{   
+     *@
+
+
+@foreach (var item in Model)
+{  
+<table>
+       <tr>
+         <td><img src="~/Images/Img/user.png" /></td>
+         <td>
+             <table>
+              <tr>
+                @* <td>@item.Email</td>*@
+              </tr>
+              <tr>
+              <td>Posted at @item.infodate </td>
+              </tr>
+            </table>
+         </td>
+       </tr>
+     </table>
+   //
+      <table>
+      <tr>
+          <td>@item.Category >></td>
+          <td style="font-size:1.35em">@item.Title</td><td>&nbsp;</td><td>&nbsp;</td>
+      </tr>
+       <tr><td>&nbsp;</td> <td> @MvcHtmlString.Create(Html.Encode(item.Contents).Replace(Environment.NewLine, "<br />"))</td>
+          <td>&nbsp;</td><td>&nbsp;</td>
+       </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        <td>
+        @if (Request.IsAuthenticated)
+        {
+          <table><tr><td>
+         <u> @Html.ActionLink("Comment ", "ReplyView", "Comments", new { id = item.OpnID }, null)</u></td><td>&nbsp;</td><td>
+         <u> @Html.ActionLink(" Reply", "Reply", "Comments", new { id = item.OpnID }, null)</u></td></tr></table>
+        }
+        </td>
+       </tr></table>
+}
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page}))

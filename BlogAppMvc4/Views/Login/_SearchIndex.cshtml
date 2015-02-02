@@ -1,0 +1,14 @@
+﻿@* @model IEnumerable<BlogAppMvc4.Models.Opinion.Opinion>*@
+
+@{
+    ViewBag.Title = "SearchIndex";
+}
+
+
+  <p> 
+    @using(Html.BeginForm("SearchIndex","Opinions",FormMethod.Get))
+    {   
+    @Html.TextBox("searchString")  <input type="submit" value="Search" />     
+    }
+  </p>
+

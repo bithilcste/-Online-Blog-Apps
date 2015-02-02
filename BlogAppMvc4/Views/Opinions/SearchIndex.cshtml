@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BlogAppMvc4.Models.Opinion.OpinModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<center><p id="blog" >@Html.ActionLink("MyBlog","Index","Opinions")</p></center>
+@if (Request.IsAuthenticated) 
+    { 
+    <p style="font-size:1.25em"><u>@Html.ActionLink("Share", "Create")</u></p>
+    }
+
+
+@foreach (var item in Model.OrderByDescending(s => s.opin.OpnID))
+{   
+     <table>
+       <tr>
+         <td><img src="~/Images/Img/user.png" /></td>
+         <td>
+             <table>
+              <tr>
+                 <td style="font-size:16px">@item.regis.FirstName @item.regis.LastName</td>
+              </tr>
+              <tr>
+              <td>Posted at @item.opin.infodate </td>
+              </tr>
+            </table>
+         </td>
+       </tr>
+     </table>
+   //
+      <table>
+      <tr>
+          <td>@item.opin.Category >></td>
+          <td style="font-size:1.35em">@item.opin.Title</td><td>&nbsp;</td><td>&nbsp;</td>
+      </tr>
+       <tr><td>&nbsp;</td> <td> @MvcHtmlString.Create(Html.Encode(item.opin.Contents).Replace(Environment.NewLine, "<br />"))</td>
+          <td>&nbsp;</td><td>&nbsp;</td>
+       </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        <td>
+        @if (Request.IsAuthenticated)
+        {
+          <table><tr><td>
+         <u> @Html.ActionLink("Comment ", "ReplyView", "Comments", new { id = item.opin.OpnID }, null)</u></td><td>&nbsp;</td><td>
+         <u>@* @Html.ActionLink(" Reply", "Reply", "Comments", new { id = item.opin.OpnID }, null)*@</u></td></tr></table>
+        }
+        </td>
+       </tr></table>
+}
